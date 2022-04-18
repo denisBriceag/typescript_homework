@@ -43,6 +43,13 @@ type RemoveOptional<Type> = {
 type RequiredUser = RemoveOptional<Entity>;
 
 //3.Removed id property & ethnicity property
+
+// type RemovedIdEthnicity<Type> = {
+//   [Property in keyof Type as Exclude<"id" , "ethnicity">] : Type[Property]
+// }
+// type withoutProperties = RemovedIdEthnicity<Entity>
+
+//Using utility types
 type RemovedIdEthnicity = Omit<Entity, "id" | "ethnicity">;
 
 //4. All to bool
