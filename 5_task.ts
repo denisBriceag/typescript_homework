@@ -29,11 +29,17 @@ function MethodDecorator(
   propertyName: string,
   propertyDescriptor: PropertyDescriptor
 ) {
-  console.log(target);
   target?.age < 18
     ? console.log("Go to school")
     : console.log("Take your beer");
-  console.log(propertyDescriptor);
+}
+
+function ParameterDecorator(target: Function, key: string, index: number) {
+  key === "logYourInfo"
+    ? console.log("this is my favourite method")
+    : console.log("index: " + index);
+
+  console.log("the method you are using now is " + key);
 }
 
 @ClassDecorator
@@ -43,7 +49,11 @@ class Person {
   @ChangeAge(15)
   age: number = 18;
 
-  constructor() {}
+  constructor(public arr: number[]) {}
+
+  addNumber(@ParameterDecorator num: number): void {
+    this.arr.push(num);
+  }
 
   @MethodDecorator
   logYourInfo(): any {
@@ -52,7 +62,11 @@ class Person {
   }
 }
 
-let a = new Person();
-a.logYourInfo();
+const array = [1, 2, 3, 4];
+
+let a = new Person(array);
+a.addNumber(5); // Expected output is: "the method you are using now is addNumber"
+a.logYourInfo(); //Expected console log "go to school" because @ChangeAge(15) is aplied to the property age
+a.arr;
 //@ts-ignore
-a.breath();
+a.breath(); //Expected output: 'can breathe'
