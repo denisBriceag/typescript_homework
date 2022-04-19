@@ -24,15 +24,6 @@ function ChangeAge(age: number): PropertyDecorator {
   };
 }
 
-function MethodDecorator(
-  target: any,
-  propertyName: string,
-  propertyDescriptor: PropertyDescriptor
-) {
-  target?.age < 18
-    ? console.log("Go to school")
-    : console.log("Take your beer");
-}
 
 function ParameterDecorator(target: Function, key: string, index: number) {
   key === "logYourInfo"
@@ -42,11 +33,31 @@ function ParameterDecorator(target: Function, key: string, index: number) {
   console.log("the method you are using now is " + key);
 }
 
+function MethodDecorator(
+  target: any,
+  propertyName: string,
+  propertyDescriptor: PropertyDescriptor
+) {
+  let originalMethod = propertyDescriptor.value
+ propertyDescriptor.value = function(){
+   if(!this.weight|| !this.height){
+     console.log('Not enough data indicated')
+   } else{
+     let bmi=(this.weight/this.height/this.height*10000).toFixed(2);
+     console.log(`Person's BMI is ${bmi}`);
+   }
+
+   return originalMethod.apply(this)  
+ }
+}
+
 @ClassDecorator
 class Person {
   name: string = "Denis";
+   weight: number = 85;
+   height: number = 188;
 
-  @ChangeAge(15)
+  @ChangeAge(23)
   age: number = 18;
 
   constructor(public arr: number[]) {}
@@ -66,7 +77,8 @@ const array = [1, 2, 3, 4];
 
 let a = new Person(array);
 a.addNumber(5); // Expected output is: "the method you are using now is addNumber"
-a.logYourInfo(); //Expected console log "go to school" because @ChangeAge(15) is aplied to the property age
-a.arr;
+a.logYourInfo(); //Expected console log "My name is : Denis and i am 23 years old" and 
+//"Person's BMI is 24.05" from Method Decorator, According to BMI chart, I'm healthy :)
+a.arr; // [1,2,3,4,5]
 //@ts-ignore
-a.breath(); //Expected output: 'can breathe'
+a.breath(); //Expected output: 'can breathe'  
