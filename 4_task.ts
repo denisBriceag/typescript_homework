@@ -56,7 +56,7 @@ type ApiResponse<T> = {
 };
 
 
-let a: ApiResponse2<Car> = {
+let a: ApiResponse<Car> = {
   data: { users : [{id: 1, color: "Denis", numberOfDoors: 23}, {id: 2, color: "Anastasia", numberOfDoors: 23}], pagination:2 }, 
   errors:['err1', 'err2']
 };
