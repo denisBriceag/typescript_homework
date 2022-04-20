@@ -80,5 +80,3 @@ a.addNumber(5); // Expected output is: "the method you are using now is addNumbe
 a.logYourInfo(); //Expected console log "My name is : Denis and i am 23 years old" and 
 //"Person's BMI is 24.05" from Method Decorator, According to BMI chart, I'm healthy :)
 a.arr; // [1,2,3,4,5]
-//@ts-ignore
-a.breath(); //Expected output: 'can breathe'  
