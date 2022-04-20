@@ -2,13 +2,12 @@
 
 function ClassDecorator(constructor: Function) {
   //Here as a parameter we receive a class constructor to which this decorator will be applied
-  constructor.prototype.walk = function () {
-    console.log("can walk");
-  };
-  constructor.prototype.breath = function () {
-    console.log("can breathe");
-  };
+  Object.seal(constructor);  
+  Object.seal(constructor.prototype);
   console.log(constructor);
+  //Object.seal will prevent properties from being added to it and will mark all existing properties as non-configurable.
+  //Values of present properties still could be changed
+  //It will also do a console.log of the constructor of the class to which Decorator will be applied
 }
 
 function ChangeAge(age: number): PropertyDecorator {
