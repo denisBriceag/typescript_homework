@@ -8,6 +8,7 @@ function ClassDecorator(constructor: Function) {
   constructor.prototype.breath = function () {
     console.log("can breathe");
   };
+  console.log(constructor);
 }
 
 function ChangeAge(age: number): PropertyDecorator {
